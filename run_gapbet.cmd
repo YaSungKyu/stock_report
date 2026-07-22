@@ -1,0 +1,11 @@
+@echo off
+REM Scheduler wrapper (separate repo). Runs the skill in the MAIN project, then copies+pushes reports here.
+setlocal
+set MAIN=C:\Projects\ai
+cd /d "%MAIN%"
+set LOGDIR=%MAIN%\reports\logs
+if not exist "%LOGDIR%" mkdir "%LOGDIR%"
+for /f %%d in ('powershell -NoProfile -Command "Get-Date -Format yyyy-MM-dd"') do set TODAY=%%d
+"C:\Users\2019439\.local\bin\claude.exe" -p "/gapbet" --allowedTools "Bash WebFetch WebSearch Read Write Edit Glob Grep Skill" > "%LOGDIR%\gapbet_%TODAY%.log" 2>&1
+call "%MAIN%\reports\commit_push_reports.cmd"
+endlocal
