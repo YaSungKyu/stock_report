@@ -6,6 +6,6 @@ cd /d "%MAIN%"
 set LOGDIR=%MAIN%\reports\logs
 if not exist "%LOGDIR%" mkdir "%LOGDIR%"
 for /f %%d in ('powershell -NoProfile -Command "Get-Date -Format yyyy-MM-dd"') do set TODAY=%%d
-"C:\Users\2019439\.local\bin\claude.exe" -p "/gapbet" --allowedTools "Bash WebFetch WebSearch Read Write Edit Glob Grep Skill" > "%LOGDIR%\gapbet_%TODAY%.log" 2>&1
+"C:\Users\2019439\.local\bin\claude.exe" -p "/gapbet" --allowedTools "Bash WebFetch WebSearch Read Write Edit Glob Grep Skill mcp__playwright__browser_navigate mcp__playwright__browser_snapshot mcp__playwright__browser_click mcp__playwright__browser_close" > "%LOGDIR%\gapbet_%TODAY%.log" 2>&1
 powershell -NoProfile -ExecutionPolicy Bypass -File "%MAIN%\reports\commit_push_reports.ps1" gapbet
 endlocal
