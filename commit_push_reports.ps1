@@ -23,6 +23,7 @@ $stamp = $d.ToString("yyyy-MM-dd_HH") + $si + $d.ToString("mm") + $bun
 $destDir = Join-Path $repo (Join-Path $Sub $day)
 if (-not (Test-Path $destDir)) { New-Item -ItemType Directory -Force $destDir | Out-Null }
 Copy-Item $newest.FullName (Join-Path $destDir "$stamp.md") -Force
+& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $repo "build_index.ps1") -Repo $repo
 & $git -C $repo add -A
 & $git -C $repo diff --cached --quiet
 if ($LASTEXITCODE -eq 0) { Log "$stamp no report changes"; exit 0 }

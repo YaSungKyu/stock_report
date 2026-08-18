@@ -1,0 +1,22 @@
+# stock_report
+
+Report archive. **Newest first** - the folder listing above is sorted the other way.
+Latest 5 dates per section; full history in each section README.
+
+## gapbet
+
+- **2026-08-18** : [15시57분](gapbet/2026-08-18/2026-08-18_15%EC%8B%9C57%EB%B6%84.md) | [15시01분](gapbet/2026-08-18/2026-08-18_15%EC%8B%9C01%EB%B6%84.md)
+- **2026-08-17** : [15시43분](gapbet/2026-08-17/2026-08-17_15%EC%8B%9C43%EB%B6%84.md) | [14시52분](gapbet/2026-08-17/2026-08-17_14%EC%8B%9C52%EB%B6%84.md)
+- **2026-08-14** : [15시44분](gapbet/2026-08-14/2026-08-14_15%EC%8B%9C44%EB%B6%84.md) | [14시58분](gapbet/2026-08-14/2026-08-14_14%EC%8B%9C58%EB%B6%84.md)
+- **2026-08-13** : [15시53분](gapbet/2026-08-13/2026-08-13_15%EC%8B%9C53%EB%B6%84.md) | [15시00분](gapbet/2026-08-13/2026-08-13_15%EC%8B%9C00%EB%B6%84.md)
+- **2026-08-12** : [15시56분](gapbet/2026-08-12/2026-08-12_15%EC%8B%9C56%EB%B6%84.md) | [15시10분](gapbet/2026-08-12/2026-08-12_15%EC%8B%9C10%EB%B6%84.md)
+- ... 17 older dates: [full list](gapbet/README.md)
+
+## gapbet_review
+
+- **2026-08-18** : [09시30분](gapbet_review/2026-08-18/2026-08-18_09%EC%8B%9C30%EB%B6%84.md)
+- **2026-08-17** : [09시41분](gapbet_review/2026-08-17/2026-08-17_09%EC%8B%9C41%EB%B6%84.md)
+- **2026-08-14** : [09시43분](gapbet_review/2026-08-14/2026-08-14_09%EC%8B%9C43%EB%B6%84.md)
+- **2026-08-13** : [16시42분](gapbet_review/2026-08-13/2026-08-13_16%EC%8B%9C42%EB%B6%84.md) | [09시42분](gapbet_review/2026-08-13/2026-08-13_09%EC%8B%9C42%EB%B6%84.md)
+- **2026-08-12** : [09시40분](gapbet_review/2026-08-12/2026-08-12_09%EC%8B%9C40%EB%B6%84.md)
+- ... 13 older dates: [full list](gapbet_review/README.md)
