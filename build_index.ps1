@@ -57,19 +57,15 @@ foreach ($s in $sections) {
     [System.IO.File]::WriteAllText((Join-Path $s.FullName "README.md"), (($sec -join "`n") + "`n"), $utf8)
 }
 
-# Root: one line per date, newest first. The section name is a code span so it separates
-# the link groups without punctuation.
-$allDays = @($byDay.Values | ForEach-Object { $_.Keys } | Sort-Object -Unique -Descending)
+# Root: sections kept apart, one line per date, newest first. The section heading links
+# to that section's full history, so no separate "older" line is needed.
 $root = @()
-foreach ($day in ($allDays | Select-Object -First $Max)) {
-    $parts = @("**$day**")
-    foreach ($name in $live) {
-        $v = $byDay[$name][$day]
-        if ($v) { $parts += "``$(Get-ShortName $name)`` $v" }
+foreach ($name in $live) {
+    $root += "#### [$(Get-ShortName $name)]($(Esc $name)/README.md)"
+    foreach ($day in ($byDay[$name].Keys | Sort-Object -Descending | Select-Object -First $Max)) {
+        $root += "- **$day** " + $byDay[$name][$day]
     }
-    $root += "- " + ($parts -join " ")
+    $root += ""
 }
-$root += ""
-$root += "older: " + (($live | ForEach-Object { "[$_]($(Esc $_)/README.md)" }) -join " . ")
 $root += ""
 [System.IO.File]::WriteAllText((Join-Path $Repo "README.md"), ($root -join "`n"), $utf8)
