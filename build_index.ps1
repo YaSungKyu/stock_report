@@ -1,6 +1,7 @@
 # Regenerate README indexes so the NEWEST report is listed first and needs no scrolling.
 # GitHub and editors sort date folders ascending, which buries today's report at the bottom.
-# Root README   : one compact table, latest $Max dates, one column per section. No heading, no blurb.
+# Root README   : latest $Max dates, one line each, no heading and no table (tables get
+#                 squeezed on phones; a plain list wraps instead).
 # Section README: full history for that section, newest first.
 # ASCII-only file (no Korean bytes) so Windows PowerShell 5.1 (cp949) parses it safely.
 # Korean labels come from the report filenames at runtime.
@@ -9,6 +10,11 @@ $ErrorActionPreference = "Continue"
 $utf8 = New-Object System.Text.UTF8Encoding($false)
 
 function Esc([string]$s) { [System.Uri]::EscapeDataString($s) }
+
+# "gapbet_review" -> "review": the phone screen has no room for the redundant prefix.
+function Get-ShortName([string]$s) {
+    if ($s -like "gapbet_*") { $s.Substring(7) } else { $s }
+}
 
 # Links for one day folder, newest file first. $prefix is prepended to the relative path.
 function Get-DayLinks($day, [string]$prefix) {
@@ -51,17 +57,17 @@ foreach ($s in $sections) {
     [System.IO.File]::WriteAllText((Join-Path $s.FullName "README.md"), (($sec -join "`n") + "`n"), $utf8)
 }
 
-# Root: one row per date, one column per section, newest first.
+# Root: one line per date, newest first. The section name is a code span so it separates
+# the link groups without punctuation.
 $allDays = @($byDay.Values | ForEach-Object { $_.Keys } | Sort-Object -Unique -Descending)
 $root = @()
-$root += "| | " + ($live -join " | ") + " |"
-$root += "|---|" + (($live | ForEach-Object { "---|" }) -join "")
 foreach ($day in ($allDays | Select-Object -First $Max)) {
-    $cells = foreach ($name in $live) {
+    $parts = @("**$day**")
+    foreach ($name in $live) {
         $v = $byDay[$name][$day]
-        if ($v) { $v } else { "-" }
+        if ($v) { $parts += "``$(Get-ShortName $name)`` $v" }
     }
-    $root += "| **$day** | " + ($cells -join " | ") + " |"
+    $root += "- " + ($parts -join " ")
 }
 $root += ""
 $root += "older: " + (($live | ForEach-Object { "[$_]($(Esc $_)/README.md)" }) -join " . ")
