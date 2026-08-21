@@ -12,12 +12,12 @@ for /f %%d in ('powershell -NoProfile -Command "Get-Date -Format yyyy-MM-dd"') d
 set LOG=%LOGDIR%\gapbet_%TODAY%.log
 set REPORT=%MAIN%\docs\gapbet\gapbet_report_%TODAY%.md
 
-REM ---- holiday guard: no bars today means the market never opened, so there is nothing to scan.
 REM ---- bound every place a run leaves files. Runs BEFORE the scan, so the previous
 REM run's artifacts stay inspectable until the next run starts and no older ones pile up.
 echo [%TIME%] cleanup >> "%LOG%"
 powershell -NoProfile -ExecutionPolicy Bypass -File "%MAIN%\reports\cleanup_artifacts.ps1" >> "%LOG%" 2>&1
 
+REM ---- holiday guard: no bars today means the market never opened, so there is nothing to scan.
 python "%MAIN%\reports\market_open.py" %TODAY% >> "%LOG%" 2>&1
 if errorlevel 1 (
   echo [%TIME%] market closed on %TODAY% -- nothing to do >> "%LOG%"

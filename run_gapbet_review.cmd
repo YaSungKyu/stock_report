@@ -15,6 +15,7 @@ REM run's artifacts stay inspectable until the next run starts and no older ones
 echo [%TIME%] cleanup >> "%LOG%"
 powershell -NoProfile -ExecutionPolicy Bypass -File "%MAIN%\reports\cleanup_artifacts.ps1" >> "%LOG%" 2>&1
 
+REM ---- holiday guard: no bars today means the market never opened, so there is nothing to scan.
 python "%MAIN%\reports\market_open.py" %TODAY% >> "%LOG%" 2>&1
 if errorlevel 1 (
   echo [%TIME%] market closed on %TODAY% -- nothing to review >> "%LOG%"
