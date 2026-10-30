@@ -8,10 +8,10 @@ $main  = "C:\Projects\ai"
 $today = (Get-Date).ToString("yyyy-MM-dd")
 if ((Get-Date).Hour -lt 17) {
     $what = "preclose (B mode)"; $file = "gapbet_preclose_$today.md"; $log = "gapbet_preclose_$today.log"
-    $when = "the closing auction ends 15:30"
+    $when = "The closing auction ends 15:30"
 } else {
     $what = "post-close scan (A mode)"; $file = "gapbet_report_$today.md"; $log = "gapbet_$today.log"
-    $when = "NXT after-market closes 20:00"
+    $when = "The NXT after-market closes 20:00"
 }
 if (Test-Path (Join-Path $main "docs\gapbet\$file")) { exit 0 }
 

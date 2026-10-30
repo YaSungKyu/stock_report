@@ -41,10 +41,13 @@ Prune (Join-Path $Main 'reports\logs')              30  'run logs'     # review 
 Prune (Join-Path $Main '.claude\skills\gapbet\logs') 30 'skill logs'
 
 # Stray run artifacts in the skill dir. The skill is told to write to %TEMP%; this catches it
-# when it forgets. docs/ and the tracked sources are untouched.
+# when it forgets. docs/ and the tracked sources are untouched. buybacks.json is skill state
+# (gapbet.md STEP 4 registry read by kis_scan.py), not an artifact -- deleting it on 2026-10-30
+# silently turned the buyback bar back into the band bar.
 $skill = Join-Path $Main '.claude\skills\gapbet'
+$keep = @('kis.json', 'buybacks.json')
 $stray = @(Get-ChildItem -LiteralPath $skill -File -Filter *.json -ErrorAction SilentlyContinue |
-           Where-Object { $_.Name -ne 'kis.json' })
+           Where-Object { $keep -notcontains $_.Name })
 if ($stray.Count) {
     Write-Host ("  stray json in skill dir: {0} -- skill wrote outside %TEMP%" -f ($stray.Name -join ', '))
     if (-not $WhatIfOnly) { $stray | Remove-Item -Force -ErrorAction SilentlyContinue }
