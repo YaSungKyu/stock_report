@@ -3,12 +3,9 @@ REM Scheduler wrapper (separate repo). Runs the skill in the MAIN project, then 
 REM Guards added 2026-08-21 (pending_changes.md item I): skip holidays, retry when no report was
 REM produced. Three scheduled runs were lost to Ctrl+C / API 529 / expired OAuth and each loss
 REM burned a compounding slot silently -- a missing report is invisible until the next review.
-REM One attempt per scheduler instance (2026-10-29): the retries are the gapbet_postclose_catchup
-REM task (16:10 / 17:10 / 18:10 / 19:10, inside the NXT after-market) instead of a loop in this
-REM console, because a Ctrl+C (0xC000013A) kills this cmd.exe along with claude and the in-console
-REM retry never ran (09-17, 10-26). A missing report is announced by report_watch.ps1
-REM (gapbet_report_watch, 19:50) -- the weekly-limit failures reset after 20:00, so being told is
-REM the only recovery there.
+REM One attempt per day (2026-11-12): only the 15:40 task runs; the catch-up retries and the
+REM preclose runs are disabled. A missing report is announced by report_watch.ps1
+REM (gapbet_report_watch, 19:50).
 setlocal
 set MAIN=C:\Projects\ai
 cd /d "%MAIN%"
@@ -46,7 +43,7 @@ if errorlevel 1 (
 
 echo [%TIME%] run >> "%LOG%"
 "C:\Users\2019439\.local\bin\claude.exe" -p "/gapbet" --dangerously-skip-permissions --mcp-config "%MAIN%\reports\mcp_headless.json" --strict-mcp-config --allowedTools "Bash WebFetch WebSearch Read Write Edit Glob Grep Skill mcp__playwright__browser_navigate mcp__playwright__browser_snapshot mcp__playwright__browser_click mcp__playwright__browser_close" >> "%LOG%" 2>&1
-if not exist "%REPORT%" echo [%TIME%] FAILED: no report -- the catch-up task retries >> "%LOG%"
+if not exist "%REPORT%" echo [%TIME%] FAILED: no report >> "%LOG%"
 powershell -NoProfile -ExecutionPolicy Bypass -File "%MAIN%\reports\commit_push_main.ps1"
 powershell -NoProfile -ExecutionPolicy Bypass -File "%MAIN%\reports\commit_push_reports.ps1" gapbet
 endlocal
